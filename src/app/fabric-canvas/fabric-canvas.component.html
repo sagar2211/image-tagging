@@ -1,0 +1,54 @@
+<h2>Create Editable Polygon on Image</h2>
+<input type="file" id="file" (change)="selectFile($event)" />
+<!-- <label for="file">Choose file</label> -->
+<p style="font-size: 0.8rem;">Right Click To Confirm Polygon</p>
+<button id="create" class="btn btn-primary" (click)="create()" [disabled]="!isPolygonDrawn">
+  Create Polygon
+</button>
+
+<hr />
+
+<div class="form-container" *ngIf="isShow">
+  <div class="input-group input-group-sm mb-3">
+    <span class="input-group-text" id="inputGroup-sizing-sm">User Name</span>
+    <input type="text" class="form-control" aria-label="Sizing example input" [(ngModel)]="username" aria-describedby="inputGroup-sizing-sm">
+  </div>
+
+  <div class="input-group input-group-sm mb-3">
+    <span class="input-group-text" id="inputGroup-sizing-sm">Description</span>
+    <input type="text" class="form-control" aria-label="Sizing example input" [(ngModel)]="description" aria-describedby="inputGroup-sizing-sm">
+  </div>
+
+  <button type="button" class="btn btn-success" (click)="onsubmit()">Success</button>
+</div>
+
+<canvas
+  id="canvasID"
+  width="400"
+  height="400"
+  style="border: 1px solid red"
+></canvas>
+
+
+<div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Polygon Name</th>
+        <th scope="col">User Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let poly of polygonArray; let i = index">
+        <td>Polygon {{i+1}}</td>
+        <td>{{poly.name}}</td>
+        <td>{{poly.description}}</td>
+        <td><button class="btn btn-primary" (click)="updatePoly(i)">Update</button></td>
+        <td><button class="btn btn-primary" *ngIf="((i!=0 && polygonArray.length == 1) || (polygonArray.length > 1))" (click)="deletePolygon(i)">Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
